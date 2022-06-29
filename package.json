@@ -1,0 +1,26 @@
+{
+  "name": "online-judge-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ashish-Suman/Online-Judge-Project.git"
+  },
+  "author": "Ashish-Suman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ashish-Suman/Online-Judge-Project/issues"
+  },
+  "homepage": "https://github.com/Ashish-Suman/Online-Judge-Project#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
