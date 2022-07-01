@@ -1,20 +1,20 @@
 const express = require("express");
-const users = require("../controllers/users");
-const passport = require("passport");
-const { verifyUser } = require("../Utilities/authenticate");
-const router = express.Router({mergeParams: true}); //mergeParams is set to true to have access to params of prefix address
-
+const router = express.Router();
+const user = require("../controllers/users");
 const User = require("../models/user");
-const CatchAsync = require("../Utilities/catchAsync");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
-router.route("/register").post(CatchAsync(users.register));
+const {
+  getToken,
+  COOKIE_OPTIONS,
+  getRefreshToken,
+  verifyUser,
+} = require("../Utilities/authenticate");
 
-router.get("/me", verifyUser, (req, res, next) => {
-    res.send(req.user)
-})
+router.post("/register", user.register);
 
-router.route("/login").post(passport.authenticate('local'), users.login);
+router.post("/login", passport.authenticate("local", {session: false}), user.login);
 
-// router.route("/logout", verifyUser, users.logout);
-
+router.get("/logout", verifyUser, user.logout);
 module.exports = router;

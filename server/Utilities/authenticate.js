@@ -8,13 +8,12 @@ exports.COOKIE_OPTIONS = {
 //   // secure cookies do not work correctly (in postman)
   secure: !dev,
   signed: true,
-  maxAge: 24 * 60 * 60,
+  maxAge: 24 * 60 * 600,
   sameSite: "none",
 }
 
 exports.getToken = (user) => {
-  console.log(user);
-  return jwt.sign(user, "secret", {
+  return jwt.sign(user, process.env.JWT_SECRET, {
     expiresIn: 24 * 60 * 60
   })
 }
@@ -26,4 +25,4 @@ exports.getRefreshToken = user => {
   return refreshToken
 }
 
-exports.verifyUser = passport.authenticate("jwt", { session: false })
+exports.verifyUser = passport.authenticate("jwt", { session: false });

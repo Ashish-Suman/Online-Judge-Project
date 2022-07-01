@@ -4,13 +4,28 @@ const express = require('express');
 const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const session = require("express-session");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user");
 const ExpressError = require("./Utilities/ExpressError");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+
+
+
+//---------------setting-up-database----------------
+const dbUrl = "mongodb://localhost:27017/online-judge";
+mongoose.connect(dbUrl);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connetcted");
+});
+
+
+//---------------end-of-setting-up-database----------------
+
 
 require("./strategies/jwtStrategy")
 require("./strategies/localStrategy")
@@ -24,34 +39,7 @@ const userRoutes = require("./routes/user");
 //---------------end-of-requiring-routes----------------------------
 
 
-//---------------setting-up-database----------------
-const dbUrl = "mongodb://localhost:27017/online-judge";
 
-// const secret = process.env.SECRET;
-// console.log(secret);
-// const store = new MongoDBStore({
-//     mongoUrl: dbUrl,
-//     secret:secret,
-//     touchAfter: 24 * 60 * 60
-
-// })
-
-// store.on('error', function(e){
-//     console.log("Session Store ERROR", e);
-// })
-
-
-
-mongoose.connect(dbUrl);
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connetcted");
-});
-
-
-//---------------end-of-setting-up-database----------------
 
 
 

@@ -24,7 +24,6 @@ const UserSchema = new Schema({
 });
 
 //Remove refreshToken from the response
-
 UserSchema.set("toJSON", {
   transform: function (doc, ret, options) {
     delete ret.refreshToken
