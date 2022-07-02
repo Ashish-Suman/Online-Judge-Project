@@ -16,5 +16,9 @@ router.post("/register", user.register);
 
 router.post("/login", passport.authenticate("local", {session: false}), user.login);
 
+router.post("/refreshToken", user.refreshToken);
+
+router.post("/verifyUser", verifyUser, user.verify);
+
 router.get("/logout", verifyUser, user.logout);
 module.exports = router;
