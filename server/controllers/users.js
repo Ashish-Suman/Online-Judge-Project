@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const ExpressError = require("../Utilities/ExpressError");
 const { getToken, COOKIE_OPTIONS, getRefreshToken } = require("../Utilities/authenticate");
 const jwt = require('jsonwebtoken');
 

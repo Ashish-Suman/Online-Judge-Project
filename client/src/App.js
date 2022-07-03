@@ -2,6 +2,7 @@ import { Route, Routes , Navigate} from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
+import ProblemList from "./components/ProblemList";
 import './App.css';
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/UserContext";
@@ -64,6 +65,7 @@ function App() {
           <Route path="/" element={userContext.token != null ? <h1>HOME</h1> : <Navigate to={"/login"} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/problems" element={<Register />} />
         </Routes>
       </div>
     </div>

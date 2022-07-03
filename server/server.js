@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const localStrategy = require("passport-local");
-const User = require("./models/user");
 const ExpressError = require("./Utilities/ExpressError");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -36,6 +35,7 @@ require("./Utilities/authenticate")
 
 //---------------requiring-routes-----------------------------------
 const userRoutes = require("./routes/user");
+const problemRoutes = require("./routes/problem");
 
 //---------------end-of-requiring-routes----------------------------
 
@@ -77,6 +77,7 @@ app.use(passport.initialize());
 
 //---------------routes------------------------------------
 app.use("/api/users", userRoutes);
+app.use("/api/problems", problemRoutes);
 
 
 

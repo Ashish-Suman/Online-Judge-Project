@@ -3,21 +3,21 @@ const Schema = mongoose.Schema;
 
 
 const problemSchema = new Schema({
-    problemId: {
+    title: {
         type: String,
         required: true,
         unique: true
     },
-    description: {
+    problemStatement: {
         type: String,
         required: true
     },
     difficulty: {
-        type: Number,
-        required: true
-    },
-    maxScore: {
-        type: Number,
-        required: true
+        type: String,
+        enum : ['EASY' , 'MEDIUM', 'DIFFICULT']
     }
 })
+
+
+
+module.exports = mongoose.model("Problem", problemSchema);
