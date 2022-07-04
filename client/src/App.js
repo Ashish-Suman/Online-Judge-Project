@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import ProblemList from "./components/ProblemList";
+import Problem from "./components/Problem";
 import './App.css';
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/UserContext";
@@ -65,7 +66,8 @@ function App() {
           <Route path="/" element={userContext.token != null ? <h1>HOME</h1> : <Navigate to={"/login"} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/problems" element={<Register />} />
+          <Route path="/problems" element={userContext.token != null ?<ProblemList /> : <Navigate to={"/login"} />} />
+          <Route path="/problems/:id" element={userContext.token != null ?<Problem /> : <Navigate to={"/login"} />} />
         </Routes>
       </div>
     </div>

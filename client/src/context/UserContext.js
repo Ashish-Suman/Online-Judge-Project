@@ -10,7 +10,6 @@ const initialState = {
 
 function setLocalStorage(key, value) {
   try {
-    console.log(key, value, "set");
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
     console.log("Unable to Acess local Storage at the moment", e);
@@ -20,7 +19,6 @@ function setLocalStorage(key, value) {
 function getLocalStorage(key, initialValue) {
   try {
     const value = window.localStorage.getItem(key);
-    console.log(key, value);
     return value ? JSON.parse(value) : initialValue;
   } catch (e) {
     // if error, return initial value

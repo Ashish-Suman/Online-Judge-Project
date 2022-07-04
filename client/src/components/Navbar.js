@@ -1,5 +1,5 @@
 
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { NavLink, Link } from 'react-router-dom';
 import { UserContext } from "../context/UserContext";
 
@@ -37,9 +37,12 @@ const Navbar = () => {
             <div className='collapse navbar-collapse justify-content-center' id='navbarNav'>
             <ul className='navbar-nav'>
                 <li className='nav-item' key='home'>
-                <NavLink to='/' className='nav-link'>Home</NavLink>
+                  <NavLink to='/' className='nav-link'>Home</NavLink>
                 </li>
-                <li className='nav-item' key='home'>
+                <li className='nav-item' key='prbolem'>
+                  <NavLink to='/problems' className='nav-link'>Problems</NavLink>
+                </li>
+                <li className='nav-item' key='login'>
                     {userContext.isAuthenticated === true ? 
                         <NavLink to='/' className='nav-link' onClick={logoutHandler}>logout</NavLink> : 
                         <NavLink to='/login' className='nav-link'>login</NavLink>

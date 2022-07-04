@@ -44,7 +44,7 @@ module.exports.verify = (req, res) => {
 }
 
 module.exports.refreshToken = (req, res, next) => {
-  let token = null;
+  let token = undefined;
   const bearerHeader = req.headers['authorization'];
   if(typeof bearerHeader !== 'undefined'){
     const bearer = bearerHeader.split(" ");
@@ -52,7 +52,9 @@ module.exports.refreshToken = (req, res, next) => {
   }
   jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
     if(err){
-      res.sendstatus(401);
+        console.log("----------------")
+      res.status = 401;
+      res.json({});
     }
     else{
       console.log(authData);

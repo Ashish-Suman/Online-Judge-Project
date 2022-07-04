@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userContext, setUserContext] = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ const Register = () => {
               isAuthenticated: true,
               isRegistered: true
            };
+           navigate("/");
           });
         }
       })

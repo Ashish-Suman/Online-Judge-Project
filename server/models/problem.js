@@ -12,9 +12,16 @@ const problemSchema = new Schema({
         type: String,
         required: true
     },
+    Example: {
+        type: String
+    },
     difficulty: {
         type: String,
         enum : ['EASY' , 'MEDIUM', 'DIFFICULT']
+    },
+    hasSolved: {
+        type: Boolean,
+        default: false
     }
 })
 

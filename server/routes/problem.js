@@ -9,8 +9,8 @@ const {
   verifyUser,
 } = require("../Utilities/authenticate");
 
-router.get("/", problems.index);
-router.get("/:id", problems.showProblems);
+router.get("/", verifyUser,problems.index);
+router.get("/:id", verifyUser,problems.showProblems);
 
 
 module.exports = router;
