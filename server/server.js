@@ -36,6 +36,7 @@ require("./Utilities/authenticate")
 //---------------requiring-routes-----------------------------------
 const userRoutes = require("./routes/user");
 const problemRoutes = require("./routes/problem");
+const submissionRoutes = require("./routes/submisstion");
 
 //---------------end-of-requiring-routes----------------------------
 
@@ -78,6 +79,7 @@ app.use(passport.initialize());
 //---------------routes------------------------------------
 app.use("/api/users", userRoutes);
 app.use("/api/problems", problemRoutes);
+app.use("/api/submissions", submissionRoutes)
 
 
 

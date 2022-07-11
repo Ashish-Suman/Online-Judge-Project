@@ -9,11 +9,8 @@ module.exports.index = async(req, res) => {
         for(let i = 0; i < problems.length; i++){
             const submission = await Submission.findOne({problemId: problems[i]._id, userId: userId, verdict: "Accepted"});
             if(submission){
-                console.log("in Sub")
                 problems[i].hasSolved = true;
             }
-
-            console.log(problems[i]);
         }
         res.json({
             success: true,

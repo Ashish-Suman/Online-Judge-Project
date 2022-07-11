@@ -1,0 +1,13 @@
+FROM alpine:latest
+
+COPY . .
+
+# C-CPP
+
+RUN apk update \
+&& apk add build-base \
+&& apk add g++ \
+&& apk add bash
+
+RUN ["chmod", "+x", "./run.sh"]
+ENTRYPOINT ["bash" ,"./run.sh" ]

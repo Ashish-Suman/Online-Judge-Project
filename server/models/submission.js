@@ -5,15 +5,25 @@ const Schema = mongoose.Schema;
 const submissionSchema = new Schema({
     problemId: {
         type: Schema.Types.ObjectId,
-        ref: 'Problem'
+        ref: 'Problem',
+        required: true
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
+    },
+    language: {
+        type: String,
+        required: true
     },
     score: {
         type: Number,
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
     },
     code: {
         type: String,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const testcase = require("./testcase");
 
 const problemSchema = new Schema({
     title: {
@@ -22,7 +22,13 @@ const problemSchema = new Schema({
     hasSolved: {
         type: Boolean,
         default: false
-    }
+    },
+    Testcases: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Testcase"
+        }
+    ]
 })
 
 

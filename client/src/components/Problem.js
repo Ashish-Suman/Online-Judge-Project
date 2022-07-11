@@ -36,22 +36,24 @@ const Problem = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       setError("");
-      console.log(code);
-      console.log(language);
       const genericErrorMessage = "Something went wrong! Please try again later.";
   
-      // fetch(process.env.REACT_APP_API_ENDPOINT + "api/users/login", {
-      //   method: "POST",
-      //   credentials: "include",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ language, code }),
-      // })
-      //   .then(async (response) => {
+      fetch(process.env.REACT_APP_API_ENDPOINT + "api/submissions", {
+        method: "POST",
+        credentials: "include",
+        // Pass authentication token as bearer token in header
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userContext.token}`,
+        },
+        body: JSON.stringify({ problemId: problem._id, language, code }),
+      })
+        .then(async (response) => {
           
-      //   })
-      //   .catch((error) => {
-      //     setError(genericErrorMessage);
-      //   });
+        })
+        .catch((error) => {
+          setError(genericErrorMessage);
+        });
     };
     useEffect(() => {
         getProblem();
@@ -76,7 +78,7 @@ const Problem = () => {
         <h1 className='page-header text-center'>{problem.title}</h1>
         <p>{escapedNewLineToLineBreakTag(problem.problemStatement)}</p>
         <form onSubmit={handleSubmit}>
-            <div className="form-group">
+          <div class="row align-items-end">
             <label htmlFor="language">Language</label>
                 <select 
                     className="form-select" 
@@ -87,13 +89,13 @@ const Problem = () => {
                     required
                 >
                     <option value="">Select Language</option>
-                    <option value="1">GNU GCC C11 5.1.0</option>
+                    <option value="cpp">CPP</option>
                 </select>
             </div>
-            <textarea className="bg-dark text-light w-100 form-control-lg" id='code' value={code} onChange={e => setCode(e.target.value)} required/>
-            <button className='btn btn-danger'>
+            <button className='btn btn-danger' type='submit'>
                 Submit <i className="fa fa-check" aria-hidden="true"></i>
             </button>
+            <textarea className="bg-dark text-light w-100 form-control-lg" id='code' value={code} onChange={e => setCode(e.target.value)} required/>
         </form>
       </div>
     )
