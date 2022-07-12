@@ -1,4 +1,5 @@
 import { Route, Routes , Navigate} from "react-router-dom";
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
@@ -57,19 +58,17 @@ function App() {
       window.removeEventListener("storage", syncLogout);
     };
   }, [syncLogout]);
-
+  
   return(
     <div>
       <Navbar isLoggedIn={userContext.token != null}/>
-      <div className="container">
         <Routes>
-          <Route path="/" element={userContext.token != null ? <h1>HOME</h1> : <Navigate to={"/login"} />} />
+          <Route path="/"  element={<Home />}/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/problems" element={userContext.token != null ?<ProblemList /> : <Navigate to={"/login"} />} />
           <Route path="/problems/:id" element={userContext.token != null ?<Problem /> : <Navigate to={"/login"} />} />
         </Routes>
-      </div>
     </div>
   )
 }

@@ -35,20 +35,14 @@ const Navbar = () => {
             <span className='navbar-toggler-icon' />
             </button>
             <div className='collapse navbar-collapse justify-content-center' id='navbarNav'>
-            <ul className='navbar-nav'>
-                <li className='nav-item' key='home'>
-                  <NavLink to='/' className='nav-link'>Home</NavLink>
-                </li>
-                <li className='nav-item' key='prbolem'>
-                  <NavLink to='/problems' className='nav-link'>Problems</NavLink>
-                </li>
-                <li className='nav-item' key='login'>
-                    {userContext.isAuthenticated === true ? 
-                        <NavLink to='/' className='nav-link' onClick={logoutHandler}>logout</NavLink> : 
-                        <NavLink to='/login' className='nav-link'>login</NavLink>
-                    }
-                </li>
-            </ul>
+              <div className='navbar-nav'>
+                    <NavLink to='/' className='nav-link'>Home</NavLink>
+                    <NavLink to='/problems' className='nav-link'>Problems</NavLink>
+                      {userContext.isAuthenticated === true ? 
+                          <NavLink to='/logout' className='nav-link' onClick={logoutHandler}>logout</NavLink> : 
+                          <NavLink to='/login' className='nav-link'>login</NavLink>
+                      }
+              </div>
             </div>
         </nav>
     )

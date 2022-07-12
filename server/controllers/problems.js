@@ -7,7 +7,7 @@ module.exports.index = async(req, res) => {
         const userId = req.user._id;
         const problems = await Problem.find({});
         for(let i = 0; i < problems.length; i++){
-            const submission = await Submission.findOne({problemId: problems[i]._id, userId: userId, verdict: "Accepted"});
+            const submission = await Submission.findOne({problemId: problems[i]._id, userId: userId, verdict: "ACCEPTED"});
             if(submission){
                 problems[i].hasSolved = true;
             }

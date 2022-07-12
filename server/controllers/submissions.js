@@ -43,7 +43,7 @@ module.exports.submit = async(req, res) => {
     const submission = new Submission(solution);
 
     const problem = await (await Problem.findById(req.body.problemId)).populate("Testcases");
-    submissionService.addSubmission(problem, submission, (err, result) => {
+    submissionService.addSubmission(problem, submission, async (err, result) => {
         if(err){
             console.log(err);
             return res.status(500).json({message: "Something Went Wrong! Try Again!!!"});
@@ -79,15 +79,15 @@ module.exports.submit = async(req, res) => {
 
         submission.result = testcases;
 
-        if (verdicts.includes("CE")) submission.verdict = "CE";
-        else if (verdicts.includes("MLE")) submission.verdict = "MLE";
-        else if (verdicts.includes("TLE")) submission.verdict = "TLE";
-        else if (verdicts.includes("RTE")) submission.verdict = "RTE";
-        else if (verdicts.includes("WA")) submission.verdict = "WA";
-        else if (verdicts.includes("AC")) submission.verdict = "AC";
+        if (verdicts.includes("CE")) submission.verdict = "COMPILATION ERROR";
+        else if (verdicts.includes("MLE")) submission.verdict = "MEMORY LIMITED EXCEEDED";
+        else if (verdicts.includes("TLE")) submission.verdict = "TIME LIMITED EXCEEDED";
+        else if (verdicts.includes("RTE")) submission.verdict = "RUNNTIME ERROR";
+        else if (verdicts.includes("WA")) submission.verdict = "WRONG ANSWER";
+        else if (verdicts.includes("AC")) submission.verdict = "ACCEPTED";
 
-
-        console.log(submission.verdict, finalResult);
+        await submission.save();
+        console.log(submission, finalResult);
 
         return res.send({ verdict: submission.verdict, result: finalResult });
     })
