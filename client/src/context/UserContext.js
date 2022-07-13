@@ -28,7 +28,7 @@ function getLocalStorage(key, initialValue) {
 
 const UserProvider = (props) => {
   const [state, setState] = useState(() => getLocalStorage("state", initialState));
-
+  console.log(state);
   useEffect(() => {
     setLocalStorage("state", state);
   });

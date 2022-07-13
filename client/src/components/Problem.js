@@ -28,7 +28,6 @@ const Problem = () => {
           } 
           else {
             console.log(response);
-            
           }
         },);
     }, [setProblem]);

@@ -1,10 +1,11 @@
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { UserContext } from "../context/UserContext";
 
 const Navbar = () => {
     const [userContext, setUserContext] = useContext(UserContext);
+    const navigate = useNavigate();
     const logoutHandler = () => {
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/users/logout", {
           credentials: "include",
@@ -17,10 +18,11 @@ const Navbar = () => {
             return { ...oldValues, username: null, isAuthenticated: false, token: null };
           });
           window.localStorage.setItem("logout", Date.now());
+          navigate("/");
         });
     };
     return(
-        <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+        <nav className='navbar navbar-expand-lg navbar-dark bg-dark d-flex'>
             <Link className='navbar-brand' to='/'>
             Online Judge
             </Link>
@@ -36,14 +38,22 @@ const Navbar = () => {
             </button>
             <div className='collapse navbar-collapse justify-content-center' id='navbarNav'>
               <div className='navbar-nav'>
-                    <NavLink to='/' className='nav-link'>Home</NavLink>
-                    <NavLink to='/problems' className='nav-link'>Problems</NavLink>
-                      {userContext.isAuthenticated === true ? 
-                          <NavLink to='/logout' className='nav-link' onClick={logoutHandler}>logout</NavLink> : 
-                          <NavLink to='/login' className='nav-link'>login</NavLink>
-                      }
+                  <NavLink to='/' className='nav-link'>Home</NavLink>
+                  <NavLink to='/problems' className='nav-link'>Problems</NavLink>
+                  <NavLink to='/submissions' className='nav-link'>Submissions</NavLink>
               </div>
-            </div>
+                  {userContext.isAuthenticated === true ? 
+
+                      <div className="navbar-nav ms-auto">  
+                      <NavLink to='/logout' className='nav-link' onClick={logoutHandler}>Logout</NavLink>
+                      </div> :
+                      <div className="navbar-nav ms-auto">
+                        <NavLink to='/login' className='nav-link'>Login</NavLink>
+                        <NavLink to='/register' className='nav-link'>Register</NavLink>
+                      </div> 
+                      
+                  }
+              </div>
         </nav>
     )
 }

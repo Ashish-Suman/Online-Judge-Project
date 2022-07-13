@@ -11,7 +11,7 @@ module.exports.register = async(req, res, next) => {
     console.log(userExist);
     if(userExist){
         res.statusCode = 409;
-        res.json({message: "User Already Exist"});
+        return res.json({message: "User Already Exist"});
     }
     User.register(
         new User({ username, email}),
@@ -45,6 +45,7 @@ module.exports.verify = (req, res) => {
 
 module.exports.refreshToken = (req, res, next) => {
   let token = undefined;
+  const user = req.user;
   const bearerHeader = req.headers['authorization'];
   if(typeof bearerHeader !== 'undefined'){
     const bearer = bearerHeader.split(" ");
@@ -52,18 +53,37 @@ module.exports.refreshToken = (req, res, next) => {
   }
   jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
     if(err){
-        console.log("----------------")
-      res.status = 401;
-      res.json({});
+        res.statusCode = 401;
+        res.json({});
     }
     else{
-      console.log(authData);
-      res.json({
-        message: "success",
-        token
-      })
+        token = getToken({ _id: user._id });
+        const refreshToken = getRefreshToken({ _id: user._id });
+        User.findById(req.user._id, (err, user) => {
+            if (err){
+                console.log(err);
+                res.statusCode = 500
+                res.json(err)
+            }
+            else{
+                user => {
+                    user.refreshToken.push({ refreshToken })
+                    user.save((err, user) => {
+                        if (err) {
+                            onsole.log(err);
+                            res.statusCode = 500
+                            res.json(err)
+                        } else {
+                            res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
+                            res.json({ success: true, token })
+                        }
+                    })
+                }
+            }
+        }
+    )
     }
-  })
+    })
 }
 
 module.exports.login = (req, res, next) => {
@@ -76,6 +96,7 @@ module.exports.login = (req, res, next) => {
                 if (err) {
                     res.statusCode = 500
                     res.json(err)
+                    console.log(err);
 
                 } else {
                     res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS)
@@ -85,7 +106,7 @@ module.exports.login = (req, res, next) => {
         },
         err => next(err)
   )
-};
+}
 
 module.exports.logout = (req, res, next) => {
     const { signedCookies = {} } = req;

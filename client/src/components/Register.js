@@ -40,7 +40,7 @@ const Register = () => {
           }
         } else {
           const data = await response.json();
-          console.log(data);
+          console.log("data-> ",data);
           setUserContext((oldValues) => {
             return { 
               ...oldValues,

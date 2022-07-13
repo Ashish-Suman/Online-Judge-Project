@@ -5,7 +5,8 @@ const submissionService = require("../Utilities/submissionService");
 module.exports.index = async(req, res) => {
     try{
         const userId = req.user._id;
-        const submissions = await Submission.find({userId: req.user._id});
+        const submissions = await (await Submission.find({userId: userId}));
+        console.log(submissions);
         res.json({
             success: true,
             submissions
@@ -33,16 +34,19 @@ module.exports.showSubmission = async (req, res) => {
 
 
 module.exports.submit = async(req, res) => {
+    const problem = await (await Problem.findById(req.body.problemId)).populate("Testcases");
     const solution = {
         problemId: req.body.problemId,
+        problemName: problem.title,
         userId: req.user._id,
+        username: req.user.username,
         code: req.body.code,
         language: req.body.language,
-        verdict: ""
+        verdict: "Pending"
     };
     const submission = new Submission(solution);
 
-    const problem = await (await Problem.findById(req.body.problemId)).populate("Testcases");
+    
     submissionService.addSubmission(problem, submission, async (err, result) => {
         if(err){
             console.log(err);
